@@ -13,6 +13,8 @@
 //
 #include "driverlib.h"
 #include "device.h"
+#include <stdint.h>
+#include <stdbool.h>
 
 //
 // Defines
@@ -33,5 +35,11 @@ void initPWM();
 
 // init other necessary pins
 void initPins();
+
+// ISR for counting pulses and determining position
+__interrupt void epwm2ISR(void);
+
+// Turn motor
+void turnMotor(uint16_t motor, uint16_t direction, uint16_t degrees);
 
 #endif /* MOTORCONTROL_H_ */

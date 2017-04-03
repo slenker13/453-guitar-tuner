@@ -6,21 +6,25 @@
  */
 
 #include "MotorControl.h"
-#include <stdint.h>
 
 
 //
 // Globals
 //
 uint16_t timeBasePeriod;
+uint16_t stepCnt;
 
 
 //
 // init function
 //
 void initMotorController(int TBPRD) {
-    // frequency calculations
+    // Set variables
     timeBasePeriod = TBPRD;
+    stepCnt = 0;
+
+    // Set up ISR
+    Interrupt_register(INT_EPWM2, &epwm2ISR);
 
     // init PWM
     initPWM();
@@ -73,7 +77,19 @@ void initPWM() {
     EPWM_setActionQualifierAction(EPWM2_BASE,
                                   EPWM_AQ_OUTPUT_A,
                                   EPWM_AQ_OUTPUT_HIGH,
-                                  EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);
+                                  EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
+
+    //
+    // Interrupt on rising edge
+    //
+    EPWM_setInterruptSource(EPWM2_BASE, EPWM_INT_TBCTR_U_CMPA);
+    EPWM_enableInterrupt(EPWM2_BASE);
+    EPWM_setInterruptEventCount(EPWM2_BASE, 1U);
+
+    //
+    // Enable interrupt
+    //
+    Interrupt_enable(INT_EPWM2);
 }
 
 //
@@ -190,4 +206,89 @@ void initPins() {
     GPIO_setPadConfig(4U, GPIO_PIN_TYPE_STD);   // RST_N
     GPIO_setDirectionMode(4U, GPIO_DIR_MODE_OUT);
     GPIO_writePin(4U, 1);
+}
+
+//
+// epwm2ISR - ePWM 2 ISR
+//
+__interrupt void epwm2ISR(void) {
+    //
+    // Increment counter
+    //
+    stepCnt++;
+
+    //
+    // Clear INT flag for this timer
+    //
+    EPWM_clearEventTriggerInterruptFlag(EPWM2_BASE);
+
+    //
+    // Acknowledge interrupt group
+    //
+    Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP3);
+}
+
+//
+// Turn motor specified number of degrees
+//
+void turnMotor(uint16_t motor, uint16_t direction, uint16_t degrees) {
+    // Calculate steps
+    uint16_t steps = degrees / 1.8;
+
+    // Reset stepCnt
+    stepCnt = 0;
+
+    // Enable Motor and set direction
+    if (motor == 1) {
+        GPIO_writePin(13U, direction);
+        GPIO_writePin(16U, 0);
+    }
+    else if (motor == 2) {
+        GPIO_writePin(17U, direction);
+        GPIO_writePin(20U, 0);
+    }
+    else if (motor == 3) {
+        GPIO_writePin(21U, direction);
+        GPIO_writePin(43U, 0);
+    }
+    else if (motor == 4) {
+        GPIO_writePin(61U, direction);
+        GPIO_writePin(64U, 0);
+    }
+    else if (motor == 5) {
+        GPIO_writePin(65U, direction);
+        GPIO_writePin(70U, 0);
+    }
+    else if (motor == 6) {
+        GPIO_writePin(71U, direction);
+        GPIO_writePin(78U, 0);
+    }
+    else {
+        return;
+    }
+
+    // Wait for correct stepCnt
+    while (stepCnt < steps) {
+        NOP;
+    }
+
+    // Disable Motor
+    if (motor == 1) {
+        GPIO_writePin(16U, 1);
+    }
+    else if (motor == 2) {
+        GPIO_writePin(20U, 1);
+    }
+    else if (motor == 3) {
+        GPIO_writePin(43U, 1);
+    }
+    else if (motor == 4) {
+        GPIO_writePin(64U, 1);
+    }
+    else if (motor == 5) {
+        GPIO_writePin(70U, 1);
+    }
+    else if (motor == 6) {
+        GPIO_writePin(78U, 1);
+    }
 }
