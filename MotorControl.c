@@ -44,9 +44,9 @@ void initPWM() {
     GPIO_setPinConfig(GPIO_2_EPWM2A);
 
     //
-    // Enable sync and clock to PWM
+    // Disable sync(Freeze clock to PWM as well)
     //
-    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);
+    SysCtl_disablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);
 
     //
     // Set-up TBCLK
@@ -82,9 +82,14 @@ void initPWM() {
     //
     // Interrupt on rising edge
     //
-    EPWM_setInterruptSource(EPWM2_BASE, EPWM_INT_TBCTR_U_CMPA);
+    EPWM_setInterruptSource(EPWM2_BASE, EPWM_INT_TBCTR_D_CMPA);
     EPWM_enableInterrupt(EPWM2_BASE);
     EPWM_setInterruptEventCount(EPWM2_BASE, 1U);
+
+    //
+    // Enable sync and clock to PWM
+    //
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);
 
     //
     // Enable interrupt
