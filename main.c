@@ -46,7 +46,7 @@ void main(void)
     /************************/
     /***** INIT MODULES *****/
     /************************/
-    initMotorController(125000);
+    initMotorController(2000);
 
     //
     // Enable Global Interrupt (INTM) and realtime interrupt (DBGM)
@@ -58,7 +58,10 @@ void main(void)
     // IDLE loop. Just sit and loop forever (optional):
     //
 
-    turnMotor(1, 0, 360);
+    turnMotor(5, 0, 360);
+    turnMotor(6, 1, 180);
+    turnMotor(6, 0, 720);
+    turnMotor(5, 1, 360);
 
     for(;;)
     {

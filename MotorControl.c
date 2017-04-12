@@ -18,7 +18,7 @@ uint16_t stepCnt;
 //
 // init function
 //
-void initMotorController(int TBPRD) {
+void initMotorController(uint16_t TBPRD) {
     // Set variables
     timeBasePeriod = TBPRD;
     stepCnt = 0;
@@ -65,7 +65,7 @@ void initPWM() {
     //
     EPWM_setTimeBaseCounterMode(EPWM2_BASE, EPWM_COUNTER_MODE_UP_DOWN);
     EPWM_disablePhaseShiftLoad(EPWM2_BASE);
-    EPWM_setClockPrescaler(EPWM2_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);
+    EPWM_setClockPrescaler(EPWM2_BASE, EPWM_CLOCK_DIVIDER_64, EPWM_HSCLOCK_DIVIDER_1);
 
     //
     // Set Action qualifier

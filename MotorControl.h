@@ -28,7 +28,7 @@
 /*********************/
 
 // init function
-void initMotorController(int TBPRD);
+void initMotorController(uint16_t TBPRD);
 
 // init ePWM2
 void initPWM();
