@@ -11,7 +11,6 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./MotorControl.obj" \
-"./PLL.obj" \
 "./main.obj" \
 "./device/device.obj" \
 "../2837xS_Generic_RAM_lnk.cmd" \
@@ -159,8 +158,8 @@ guitar_tuner_control.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "MotorControl.obj" "PLL.obj" "main.obj" "device\device.obj" 
-	-$(RM) "MotorControl.d" "PLL.d" "main.d" "device\device.d" 
+	-$(RM) "MotorControl.obj" "main.obj" "device\device.obj" 
+	-$(RM) "MotorControl.d" "main.d" "device\device.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

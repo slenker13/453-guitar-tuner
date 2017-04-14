@@ -13,32 +13,26 @@ LIB_SRCS += \
 
 C_SRCS += \
 ../MotorControl.c \
-../PLL.c \
 ../main.c 
 
 C_DEPS += \
 ./MotorControl.d \
-./PLL.d \
 ./main.d 
 
 OBJS += \
 ./MotorControl.obj \
-./PLL.obj \
 ./main.obj 
 
 OBJS__QUOTED += \
 "MotorControl.obj" \
-"PLL.obj" \
 "main.obj" 
 
 C_DEPS__QUOTED += \
 "MotorControl.d" \
-"PLL.d" \
 "main.d" 
 
 C_SRCS__QUOTED += \
 "../MotorControl.c" \
-"../PLL.c" \
 "../main.c" 
 
 
