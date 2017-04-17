@@ -23,8 +23,10 @@
 /***** FUNCTIONS *****/
 /*********************/
 
-// init function
+// init functions
 void initBluetooth(void);
+void initSCI(void);
+void initGPIO(void);
 
 // ISR
 __interrupt void sciaRXFIFOISR(void);

@@ -18,6 +18,14 @@ uint16_t recievedChar;
 // init function
 //
 void initBluetooth(void) {
+    initSCI();
+    initGPIO();
+}
+
+//
+// Init SCI UART
+//
+void initSCI(void) {
     // RX pin (GPIO 85)
     GPIO_setMasterCore(85, GPIO_CORE_CPU1);
     GPIO_setPinConfig(GPIO_85_SCIRXDA);
@@ -36,12 +44,12 @@ void initBluetooth(void) {
     Interrupt_register(INT_SCIA_RX, sciaRXFIFOISR);
 
     // Initialize the SCI FIFO
-    // 8 char bits, 1 stop bit, no parity. Baud rate is 115000.
-    SCI_setConfig(SCIA_BASE, DEVICE_LSPCLK_FREQ, 115000, (SCI_CONFIG_WLEN_8 |
+    // 8 char bits, 1 stop bit, no parity. Baud rate is 115200.
+    SCI_setConfig(SCIA_BASE, DEVICE_LSPCLK_FREQ, 115200, (SCI_CONFIG_WLEN_8 |
                                                         SCI_CONFIG_STOP_ONE |
                                                         SCI_CONFIG_PAR_NONE));
     SCI_enableModule(SCIA_BASE);
-    SCI_enableLoopback(SCIA_BASE);
+    SCI_disableLoopback(SCIA_BASE);
     SCI_resetChannels(SCIA_BASE);
     SCI_enableFIFO(SCIA_BASE);
 
@@ -58,6 +66,28 @@ void initBluetooth(void) {
     Interrupt_enable(INT_SCIA_RX);
 
     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP9);
+}
+
+//
+// Init GPIO pins
+//
+void initGPIO(void) {
+    GPIO_setPadConfig(86U, GPIO_PIN_TYPE_STD);
+    GPIO_setDirectionMode(86U, GPIO_DIR_MODE_OUT);
+    GPIO_setPadConfig(87U, GPIO_PIN_TYPE_STD);
+    GPIO_setDirectionMode(87U, GPIO_DIR_MODE_OUT);
+    GPIO_setPadConfig(89U, GPIO_PIN_TYPE_STD);
+    GPIO_setDirectionMode(89U, GPIO_DIR_MODE_OUT);
+    GPIO_setPadConfig(90U, GPIO_PIN_TYPE_STD);
+    GPIO_setDirectionMode(90U, GPIO_DIR_MODE_OUT);
+    GPIO_setPadConfig(91U, GPIO_PIN_TYPE_STD);
+    GPIO_setDirectionMode(91U, GPIO_DIR_MODE_OUT);
+
+    GPIO_writePin(86U, 0);  // Auto-discovery (GPIO3)
+    GPIO_writePin(87U, 0);  // Factory reset (GPIO4)
+    GPIO_writePin(89U, 0);  // BT master (GPIO6)
+    GPIO_writePin(90U, 0);  // Baud rate (GPIO7) (115k)
+    GPIO_writePin(91U, 1);  // Reset_n
 }
 
 //
