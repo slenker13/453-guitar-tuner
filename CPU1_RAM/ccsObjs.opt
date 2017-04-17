@@ -1,1 +1,1 @@
-"./MotorControl.obj" "./main.obj" "./device/device.obj" "../2837xS_Generic_RAM_lnk.cmd" "../driverlib.lib" -llibc.a 
+"./Bluetooth.obj" "./MotorControl.obj" "./main.obj" "./device/device.obj" "../2837xS_Generic_RAM_lnk.cmd" "../driverlib.lib" -llibc.a 

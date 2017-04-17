@@ -16,6 +16,7 @@
 #include "driverlib.h"
 #include "device.h"
 #include "MotorControl.h"
+#include "Bluetooth.h"
 
 //
 // Main
@@ -47,6 +48,7 @@ void main(void)
     /***** INIT MODULES *****/
     /************************/
     initMotorController(2000);
+    initBluetooth();
 
     //
     // Enable Global Interrupt (INTM) and realtime interrupt (DBGM)
@@ -58,10 +60,12 @@ void main(void)
     // IDLE loop. Just sit and loop forever (optional):
     //
 
-    turnMotor(5, 0, 360);
-    turnMotor(6, 1, 180);
-    turnMotor(6, 0, 720);
-    turnMotor(5, 1, 360);
+    //turnMotor(5, 0, 360);
+    //turnMotor(6, 1, 180);
+    //turnMotor(6, 0, 720);
+    //turnMotor(5, 1, 360);
+
+    //SCI_writeCharNonBlocking(SCIA_BASE, 'a');
 
     for(;;)
     {

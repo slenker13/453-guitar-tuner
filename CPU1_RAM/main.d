@@ -73,6 +73,8 @@ main.obj: C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs/dr
 main.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
 main.obj: ../MotorControl.h
 main.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
+main.obj: ../Bluetooth.h
+main.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
 
 ../main.c: 
 C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/driverlib.h: 
@@ -146,4 +148,6 @@ C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs/driverlib/us
 C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs/driverlib/version.h: 
 C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 
 ../MotorControl.h: 
+C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 
+../Bluetooth.h: 
 C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 

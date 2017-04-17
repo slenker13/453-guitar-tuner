@@ -10,6 +10,7 @@ GEN_OPTS__FLAG :=
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
+"./Bluetooth.obj" \
 "./MotorControl.obj" \
 "./main.obj" \
 "./device/device.obj" \
@@ -158,8 +159,8 @@ guitar_tuner_control.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "MotorControl.obj" "main.obj" "device\device.obj" 
-	-$(RM) "MotorControl.d" "main.d" "device\device.d" 
+	-$(RM) "Bluetooth.obj" "MotorControl.obj" "main.obj" "device\device.obj" 
+	-$(RM) "Bluetooth.d" "MotorControl.d" "main.d" "device\device.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
