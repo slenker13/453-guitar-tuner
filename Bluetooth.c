@@ -57,7 +57,7 @@ void initSCI(void) {
     SCI_enableInterrupt(SCIA_BASE, (SCI_INT_RXFF));
     SCI_disableInterrupt(SCIA_BASE, SCI_INT_RXERR);
 
-    SCI_setFIFOInterruptLevel(SCIA_BASE, SCI_FIFO_TX1, SCI_FIFO_RX1);
+    SCI_setFIFOInterruptLevel(SCIA_BASE, SCI_FIFO_TX0, SCI_FIFO_RX1);
     SCI_performSoftwareReset(SCIA_BASE);
 
     SCI_resetTxFIFO(SCIA_BASE);

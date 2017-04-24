@@ -50,6 +50,7 @@ void initPWM() {
 
     //
     // Set-up TBCLK
+    // CLOCK DIVIDER = 64
     //
     EPWM_setTimeBasePeriod(EPWM2_BASE, timeBasePeriod);
     EPWM_setPhaseShift(EPWM2_BASE, 0U);

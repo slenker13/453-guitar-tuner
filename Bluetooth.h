@@ -14,10 +14,6 @@
 #include "driverlib.h"
 #include "device.h"
 
-//
-// Defines
-//
-
 
 /*********************/
 /***** FUNCTIONS *****/

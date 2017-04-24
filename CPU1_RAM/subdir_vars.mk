@@ -12,31 +12,37 @@ LIB_SRCS += \
 ../driverlib.lib 
 
 C_SRCS += \
+../ADCInit.c \
 ../Bluetooth.c \
 ../MotorControl.c \
 ../main.c 
 
 C_DEPS += \
+./ADCInit.d \
 ./Bluetooth.d \
 ./MotorControl.d \
 ./main.d 
 
 OBJS += \
+./ADCInit.obj \
 ./Bluetooth.obj \
 ./MotorControl.obj \
 ./main.obj 
 
 OBJS__QUOTED += \
+"ADCInit.obj" \
 "Bluetooth.obj" \
 "MotorControl.obj" \
 "main.obj" 
 
 C_DEPS__QUOTED += \
+"ADCInit.d" \
 "Bluetooth.d" \
 "MotorControl.d" \
 "main.d" 
 
 C_SRCS__QUOTED += \
+"../ADCInit.c" \
 "../Bluetooth.c" \
 "../MotorControl.c" \
 "../main.c" 
