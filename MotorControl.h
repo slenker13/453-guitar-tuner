@@ -42,4 +42,8 @@ __interrupt void epwm2ISR(void);
 // Turn motor
 void turnMotor(uint16_t motor, uint16_t direction, uint16_t degrees);
 
+// Enable and disable motor
+void enableMotor(uint16_t motor, uint16_t direction);
+void disableMotor(uint16_t motor);
+
 #endif /* MOTORCONTROL_H_ */

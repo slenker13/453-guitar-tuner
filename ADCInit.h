@@ -17,9 +17,11 @@
 //
 // Defines
 //
-#define RESULTS_BUFFER_SIZE  256
 #define EX_ADC_RESOLUTION    ADC_RESOLUTION_12BIT   // Or ADC_RESOLUTION_12BIT
 #define EX_ADC_SIGNAL_MODE   ADC_MODE_SINGLE_ENDED  // Or ADC_MODE_DIFFERENTIAL
+
+#define ADC_BASELINE    2200
+#define ADC_THRESHOLD    100
 
 
 /*********************/
@@ -42,9 +44,10 @@ void initADCSOC(void);
 void initEPWM(void);
 
 //
-// fill adc buffer
+// Start and Stop ADC
 //
-void fillADCBuffer();
+void startADC(void);
+void stopADC(void);
 
 //
 // ADC ISR

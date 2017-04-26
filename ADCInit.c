@@ -6,19 +6,20 @@
  */
 
 #include "ADCInit.h"
+#include "Tune.h"
 
 
 //
 // Globals
 //
-uint16_t adcAResults[RESULTS_BUFFER_SIZE];   // Buffer for results
-uint16_t index;                              // Index into result buffer
-volatile uint16_t bufferFull;                // Flag to indicate buffer is full
+uint16_t thresholdCounter;
 
 //
 // Init function
 //
 void initADC(void) {
+    thresholdCounter = 0;
+
     //
     // Map the ISR
     //
@@ -51,17 +52,6 @@ void initADC(void) {
 
     // Configure SOC0
     initADCSOC();
-
-    //
-    // Initialize results buffer
-    //
-    for(index = 0; index < RESULTS_BUFFER_SIZE; index++)
-    {
-        adcAResults[index] = 0;
-    }
-
-    index = 0;
-    bufferFull = 0;
 
     //
     // Enable ADC interrupt
@@ -125,60 +115,54 @@ void initEPWM(void) {
 }
 
 //
-// fill adc buffer
+// Start ADC
 //
-void fillADCBuffer() {
+void startADC(void) {
     //
     // Start ePWM1, enabling SOCA and putting the counter in up-count mode
     //
     EPWM_enableADCTrigger(EPWM1_BASE, EPWM_SOC_A);
     EPWM_setTimeBaseCounterMode(EPWM1_BASE, EPWM_COUNTER_MODE_UP);
+}
 
-    //
-    // Wait while ePWM1 causes ADC conversions which then cause interrupts.
-    // When the results buffer is filled, the bufferFull flag will be set.
-    //
-    while(bufferFull == 0)
-    {
-    }
-    bufferFull = 0;     // Clear the buffer full flag
-
+//
+// Stop ADC
+//
+void stopADC(void) {
     //
     // Stop ePWM1, disabling SOCA and freezing the counter
     //
     EPWM_disableADCTrigger(EPWM1_BASE, EPWM_SOC_A);
     EPWM_setTimeBaseCounterMode(EPWM1_BASE, EPWM_COUNTER_MODE_STOP_FREEZE);
-
-    //
-    // Software breakpoint. At this point, conversion results are stored in
-    // adcAResults.
-    //
-    // Hit run again to get updated conversions.
-    //
-    ESTOP0;
 }
 
 //
 // ADC ISR
 //
 __interrupt void adcA1ISR(void) {
-    //
-    // Add the latest result to the buffer
-    //
-    adcAResults[index++] = ADC_readResult(ADCARESULT_BASE, ADC_SOC_NUMBER0);
+    int16_t adcResult;
 
-    //
-    // Set the bufferFull flag if the buffer is full
-    //
-    if(RESULTS_BUFFER_SIZE <= index)
-    {
-        index = 0;
-        bufferFull = 1;
+    // Get the latest result and center it at 0
+    adcResult = ADC_readResult(ADCARESULT_BASE, ADC_SOC_NUMBER0) - ADC_BASELINE;
+
+    if (adcResult > ADC_THRESHOLD || adcResult < -ADC_THRESHOLD) {
+        tuning = true;
+        thresholdCounter = 100;
+
+        // TODO: SEND adcResult to PLL function
+    }
+    else {
+        thresholdCounter--;
     }
 
-    //
-    // Clear the interrupt flag and issue ACK
-    //
-    ADC_clearInterruptStatus(ADCA_BASE, ADC_INT_NUMBER1);
-    Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
+    if (thresholdCounter == 0 && tuning) {
+        // Stop ADC
+        stopADC();
+
+        // Strum again
+
+        // Clear ADC interrupt
+        ADC_clearInterruptStatus(ADCA_BASE, ADC_INT_NUMBER1);
+        Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
+    }
 }

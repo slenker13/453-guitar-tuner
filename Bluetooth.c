@@ -6,6 +6,8 @@
  */
 
 #include "Bluetooth.h"
+#include "Tune.h"
+#include "ADCInit.h"
 
 
 //
@@ -96,10 +98,11 @@ void initGPIO(void) {
 __interrupt void sciaRXFIFOISR(void) {
     recievedChar = SCI_readCharBlockingFIFO(SCIA_BASE);
 
-    // HANDLE TUNING
+    /**** HANDLE TUNING ****/
+    // check char
+    // Standard Tuning
+    setStringInfo('s');
 
-
-    SCI_clearOverflowStatus(SCIA_BASE);
-    SCI_clearInterruptStatus(SCIA_BASE, SCI_INT_RXFF);
-    Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP9);
+    // Turn on ADC
+    startADC();
 }

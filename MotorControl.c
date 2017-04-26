@@ -236,6 +236,7 @@ __interrupt void epwm2ISR(void) {
 
 //
 // Turn motor specified number of degrees
+// dir 1 = up, 0 = down
 //
 void turnMotor(uint16_t motor, uint16_t direction, uint16_t degrees) {
     // Calculate steps
@@ -279,6 +280,57 @@ void turnMotor(uint16_t motor, uint16_t direction, uint16_t degrees) {
     }
 
     // Disable Motor
+    if (motor == 1) {
+        GPIO_writePin(16U, 1);
+    }
+    else if (motor == 2) {
+        GPIO_writePin(20U, 1);
+    }
+    else if (motor == 3) {
+        GPIO_writePin(43U, 1);
+    }
+    else if (motor == 4) {
+        GPIO_writePin(64U, 1);
+    }
+    else if (motor == 5) {
+        GPIO_writePin(70U, 1);
+    }
+    else if (motor == 6) {
+        GPIO_writePin(78U, 1);
+    }
+}
+
+// Enable motor
+void enableMotor(uint16_t motor, uint16_t direction) {
+    // Enable Motor and set direction
+    if (motor == 1) {
+        GPIO_writePin(13U, direction);
+        GPIO_writePin(16U, 0);
+    }
+    else if (motor == 2) {
+        GPIO_writePin(17U, direction);
+        GPIO_writePin(20U, 0);
+    }
+    else if (motor == 3) {
+        GPIO_writePin(21U, direction);
+        GPIO_writePin(43U, 0);
+    }
+    else if (motor == 4) {
+        GPIO_writePin(61U, direction);
+        GPIO_writePin(64U, 0);
+    }
+    else if (motor == 5) {
+        GPIO_writePin(65U, direction);
+        GPIO_writePin(70U, 0);
+    }
+    else if (motor == 6) {
+        GPIO_writePin(71U, direction);
+        GPIO_writePin(78U, 0);
+    }
+}
+
+// Disable motor
+void disableMotor(uint16_t motor) {
     if (motor == 1) {
         GPIO_writePin(16U, 1);
     }

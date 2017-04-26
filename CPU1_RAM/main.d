@@ -77,6 +77,8 @@ main.obj: ../Bluetooth.h
 main.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
 main.obj: ../ADCInit.h
 main.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
+main.obj: ../Tune.h
+main.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
 
 ../main.c: 
 C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/driverlib.h: 
@@ -154,4 +156,6 @@ C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h:
 ../Bluetooth.h: 
 C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 
 ../ADCInit.h: 
+C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 
+../Tune.h: 
 C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 

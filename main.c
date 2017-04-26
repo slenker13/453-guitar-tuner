@@ -18,6 +18,7 @@
 #include "MotorControl.h"
 #include "Bluetooth.h"
 #include "ADCInit.h"
+#include "Tune.h"
 
 //
 // Main
@@ -48,9 +49,10 @@ void main(void)
     /************************/
     /***** INIT MODULES *****/
     /************************/
-    initMotorController(2000);
+    initMotorController(500);
     initBluetooth();
     initADC();
+    initTune();
 
     //
     // Enable Global Interrupt (INTM) and realtime interrupt (DBGM)
@@ -59,22 +61,12 @@ void main(void)
     ERTM;
 
     //
-    // IDLE loop. Just sit and loop forever (optional):
+    // IDLE loop
     //
-
-    //turnMotor(4, 0, 360);
-    //turnMotor(2, 1, 180);
-    //turnMotor(3, 0, 720);
-    //turnMotor(4, 1, 360);
-
-    //SCI_writeCharNonBlocking(SCIA_BASE, 'a');
-
     for(;;)
     {
-        //NOP;
-        //SCI_writeCharNonBlocking(SCIA_BASE, 'a');
-        //DEVICE_DELAY_US(1000000);
-        fillADCBuffer();
+
+        NOP;
     }
 }
 

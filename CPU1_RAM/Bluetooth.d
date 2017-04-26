@@ -72,6 +72,10 @@ Bluetooth.obj: C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837
 Bluetooth.obj: C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs/driverlib/usb.h
 Bluetooth.obj: C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs/driverlib/version.h
 Bluetooth.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
+Bluetooth.obj: ../Tune.h
+Bluetooth.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
+Bluetooth.obj: ../ADCInit.h
+Bluetooth.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
 
 ../Bluetooth.c: 
 ../Bluetooth.h: 
@@ -144,4 +148,8 @@ C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs/driverlib/up
 C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs/driverlib/inc/hw_upp.h: 
 C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs/driverlib/usb.h: 
 C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs/driverlib/version.h: 
+C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 
+../Tune.h: 
+C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 
+../ADCInit.h: 
 C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 
