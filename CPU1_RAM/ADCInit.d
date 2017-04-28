@@ -74,6 +74,8 @@ ADCInit.obj: C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs
 ADCInit.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
 ADCInit.obj: ../Tune.h
 ADCInit.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
+ADCInit.obj: ../MotorControl.h
+ADCInit.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
 
 ../ADCInit.c: 
 ../ADCInit.h: 
@@ -148,4 +150,6 @@ C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs/driverlib/us
 C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs/driverlib/version.h: 
 C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 
 ../Tune.h: 
+C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 
+../MotorControl.h: 
 C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 

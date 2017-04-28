@@ -24,7 +24,10 @@
 //
 // Globals
 //
-extern bool tuning;
+extern bool tuning;                    // System currently tuning
+extern bool locked;                    // PLL locked onto a frequency
+extern uint16_t currString;            // Current string being tuned
+extern bool low;                       // True if tuning bottom 3 strings (6,4,2)
 
 //
 // String frequencies struct
@@ -51,6 +54,6 @@ void setStringInfo(char config);
 void PLL(bool newString, uint16_t string, float adcIn);
 
 // Tune guitar
-void tuneGuitar(bool low, float s1, float s2, float s3);
+void tuneGuitar(float freq);
 
 #endif /* TUNE_H_ */

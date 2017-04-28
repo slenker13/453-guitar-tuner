@@ -7,6 +7,7 @@
 
 #include "ADCInit.h"
 #include "Tune.h"
+#include "MotorControl.h"
 
 
 //
@@ -150,28 +151,35 @@ __interrupt void adcA1ISR(void) {
         if (!tuning) {
             // Beginning of tuning
             tuning = true;
-            PLL(true, , adcResult);
+            PLL(true, currString, adcResult);
         }
         else {
             // Already tuning
-            PLL(false, , adcResult);
+            PLL(false, currString, adcResult);
         }
         thresholdCounter = 100;
     }
     else {
         if (tuning) {
-            PLL(false, 2, adcResult);
+            PLL(false, currString, adcResult);
         }
         thresholdCounter--;
     }
 
-    if (thresholdCounter == 0 && tuning) {
+    if ((thresholdCounter == 0 || locked) && tuning) {
         tuning = false;
         // Stop ADC
         //stopADC();
+        tuning = false;
+        disableAllMotors();
 
-        // Strum again
+        // If locked swtich to next string
+        if (locked) {
+            locked = false;
+            currString += 2;
+        }
 
+        // Send message to strum again
 
     }
 

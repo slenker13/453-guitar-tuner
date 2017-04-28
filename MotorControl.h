@@ -46,4 +46,7 @@ void turnMotor(uint16_t motor, uint16_t direction, uint16_t degrees);
 void enableMotor(uint16_t motor, uint16_t direction);
 void disableMotor(uint16_t motor);
 
+// Disable all motors
+void disableAllMotors();
+
 #endif /* MOTORCONTROL_H_ */

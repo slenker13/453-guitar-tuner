@@ -7,6 +7,7 @@
 
 #include "Tune.h"
 #include "ADCInit.h"
+#include "MotorControl.h"
 
 #include <string.h>
 #include <math.h>
@@ -14,11 +15,11 @@
 //
 // Globals
 //
-StringInformation stringInfo;
-bool tuning;
-bool locked;
-float filtOutputs[5] = {0};
-float filtInputs[5] = {0};
+StringInformation stringInfo;   // Current string infromation
+bool tuning;                    // System currently tuning
+bool locked;                    // PLL locked onto a frequency
+uint16_t currString;            // Current string being tuned
+bool low;                       // True if tuning bottom 3 strings (6,4,2)
 
 //
 // Tuning configurations
@@ -45,6 +46,8 @@ const StringInformation stringInfoStandard = { { 329.63f, 246.94f, 196.00f, 146.
 void initTune(void) {
     tuning = false;
     locked = false;
+    low = true;
+    currString = 6;
 
     // Default to standard
     stringInfo = stringInfoStandard;
@@ -71,8 +74,11 @@ void PLL(bool newString, uint16_t string, float adcIn) {
     // Target frequency
     float f0 = stringInfo.freqs[string - 1];
 
+    // Filter buffers
+    static float filtOutputs[5] = {0};
+    static float filtInputs[5] = {0};
+
     // Loop variables
-    //static float freqIncrOld = 0.0f;   // The last frequency change
     static float freqIncr = 0.0f;      // The current frequency change
     static float freq = 0.0f;            // Current frequency of the follow signal
     // Preallocate phase vectors
@@ -98,6 +104,8 @@ void PLL(bool newString, uint16_t string, float adcIn) {
         j = 0;
         memcpy(avg, (float[7]){20.0f,20.0f,20.0f,20.0f,20.0f,20.0f,20.0f}, sizeof(float) * avgLength);
         memcpy(avg2, (float[7]){20.0f,20.0f,20.0f,20.0f,20.0f,20.0f,20.0f}, sizeof(float) * avgLength);
+        memcpy(filtInputs, (float[5]){0.0f,0.0f,0.0f,0.0f,0.0f}, sizeof(float) * 5);
+        memcpy(filtOutputs, (float[5]){0.0f,0.0f,0.0f,0.0f,0.0f}, sizeof(float) * 5);
         ptr = 0;
     }
 
@@ -115,7 +123,6 @@ void PLL(bool newString, uint16_t string, float adcIn) {
             stringInfo.coefs[string-1][1][2] * filtInputs[2] -
             stringInfo.coefs[string-1][1][3] * filtInputs[3] -
             stringInfo.coefs[string-1][1][4] * filtInputs[4];
-
 
     // Shift inputs
     filtInputs[4] = filtInputs[3];
@@ -167,69 +174,44 @@ void PLL(bool newString, uint16_t string, float adcIn) {
 
     // reset counter;
     j++;
+
+    // Tune the guitar!
+    tuneGuitar(freq);
 }
 
 // Tune guitar
-void tuneGuitar(bool low, float s1, float s2, float s3) {
-    float diff1, diff2, diff3;
+void tuneGuitar(float freq) {
+    float diff;
+    uint16_t dir = 0;
 
-    // Get frequency differences
-    if (low) {
-        // 2 4 6
-        diff1 = s1 - stringInfo.freqs[1];
-        diff2 = s2 - stringInfo.freqs[3];
-        diff3 = s3 - stringInfo.freqs[5];
-    }
-    else {
-        // 1 3 5
-        diff1 = s1 - stringInfo.freqs[0];
-        diff2 = s2 - stringInfo.freqs[2];
-        diff3 = s3 - stringInfo.freqs[4];
-    }
+    // Get frequency difference
+    diff = freq - stringInfo.freqs[currString - 1];
 
     // Check if in tune
-    if (diff1 < TUNING_THRESHOLD && diff2 < TUNING_THRESHOLD && diff3 < TUNING_THRESHOLD) {
+    if ((diff < TUNING_THRESHOLD) && locked) {
         // In tune!!!!
-        // Turn off ADC
-        stopADC();
-
-        // Clear interrupts
-        // Clear SCI interrupt
-        SCI_clearOverflowStatus(SCIA_BASE);
-        SCI_clearInterruptStatus(SCIA_BASE, SCI_INT_RXFF);
-        Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP9);
-        // Clear ADC interrupt
-        ADC_clearInterruptStatus(ADCA_BASE, ADC_INT_NUMBER1);
-        Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
+        disableAllMotors();
+        locked = false;
 
         return;
     }
-
-    // String 1
-    if (diff1 > TUNING_THRESHOLD) {
-        // Turn on motor
+    else if (diff < 0) {
+        // String is flat
+        dir = 1;
     }
     else {
-        // Turn off motor
+        // String is sharp
+        dir = 0;
     }
 
-    // String 2
-    if (diff2 > TUNING_THRESHOLD) {
-        // Turn on motor
+    // Turn Motor
+    enableMotor(4, dir);
+/*
+    if (low) {
+        enableMotor(currString, dir);
     }
     else {
-        // Turn off motor
+        enableMotor(currString + 1, dir);
     }
-
-    // String 3
-    if (diff3 > TUNING_THRESHOLD) {
-        // Turn on motor
-    }
-    else {
-        // Turn off motor
-    }
-
-    // Clear ADC interrupt
-    ADC_clearInterruptStatus(ADCA_BASE, ADC_INT_NUMBER1);
-    Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
+*/
 }

@@ -74,6 +74,8 @@ Tune.obj: C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs/dr
 Tune.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
 Tune.obj: ../ADCInit.h
 Tune.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
+Tune.obj: ../MotorControl.h
+Tune.obj: C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h
 Tune.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-c2000_16.9.1.LTS/include/string.h
 Tune.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-c2000_16.9.1.LTS/include/linkage.h
 Tune.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-c2000_16.9.1.LTS/include/math.h
@@ -152,6 +154,8 @@ C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs/driverlib/us
 C:/ti/tirex-content/C2000Ware_1_00_00_00_Software/driverlib/f2837xs/driverlib/version.h: 
 C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 
 ../ADCInit.h: 
+C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 
+../MotorControl.h: 
 C:/Users/Owner/Desktop/School/453/CCS/guitar_tuner_control/device/device.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-c2000_16.9.1.LTS/include/string.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-c2000_16.9.1.LTS/include/linkage.h: 

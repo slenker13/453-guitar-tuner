@@ -49,7 +49,7 @@ void main(void)
     /************************/
     /***** INIT MODULES *****/
     /************************/
-    initMotorController(2000);
+    initMotorController(5000);
     initBluetooth();
     initADC();
     initTune();
@@ -63,6 +63,8 @@ void main(void)
     //
     // IDLE loop
     //
+    startADC();
+
     for(;;)
     {
         NOP;

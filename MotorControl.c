@@ -350,3 +350,13 @@ void disableMotor(uint16_t motor) {
         GPIO_writePin(78U, 1);
     }
 }
+
+// Disable all motors
+void disableAllMotors() {
+    GPIO_writePin(16U, 1);
+    GPIO_writePin(20U, 1);
+    GPIO_writePin(43U, 1);
+    GPIO_writePin(64U, 1);
+    GPIO_writePin(70U, 1);
+    GPIO_writePin(78U, 1);
+}

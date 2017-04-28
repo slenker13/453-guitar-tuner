@@ -105,4 +105,9 @@ __interrupt void sciaRXFIFOISR(void) {
 
     // Turn on ADC
     startADC();
+
+    // Clear SCI interrupt
+    SCI_clearOverflowStatus(SCIA_BASE);
+    SCI_clearInterruptStatus(SCIA_BASE, SCI_INT_RXFF);
+    Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP9);
 }
