@@ -49,7 +49,7 @@ void main(void)
     /************************/
     /***** INIT MODULES *****/
     /************************/
-    initMotorController(500);
+    initMotorController(2000);
     initBluetooth();
     initADC();
     initTune();
@@ -65,7 +65,6 @@ void main(void)
     //
     for(;;)
     {
-
         NOP;
     }
 }

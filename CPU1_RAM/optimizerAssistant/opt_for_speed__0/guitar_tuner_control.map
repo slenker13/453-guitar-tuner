@@ -1,0 +1,487 @@
+******************************************************************************
+             TMS320C2000 Linker PC v16.9.1                     
+******************************************************************************
+>> Linked Wed Apr 26 22:21:34 2017
+
+OUTPUT FILE NAME:   <guitar_tuner_control.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 00008d6d
+
+
+MEMORY CONFIGURATION
+
+         name            origin    length      used     unused   attr    fill
+----------------------  --------  ---------  --------  --------  ----  --------
+PAGE 0:
+  BEGIN                 00000000   00000002  00000000  00000002  RWIX
+  RAMM0                 00000122   000002de  000002de  00000000  RWIX
+  RAMLS0                00008000   00000800  000007fe  00000002  RWIX
+  RAMLS1                00008800   00000800  000007f9  00000007  RWIX
+  RAMLS2                00009000   00000800  000002d3  0000052d  RWIX
+  RAMLS3                00009800   00000800  00000000  00000800  RWIX
+  RAMLS4                0000a000   00000800  00000000  00000800  RWIX
+  RAMD0                 0000b000   00000800  00000800  00000000  RWIX
+  RESET                 003fffc0   00000002  00000000  00000002  RWIX
+
+PAGE 1:
+  BOOT_RSVD             00000002   00000120  00000000  00000120  RWIX
+  RAMM1                 00000400   00000400  00000100  00000300  RWIX
+  RAMLS5                0000a800   00000800  00000744  000000bc  RWIX
+  RAMD1                 0000b800   00000800  00000000  00000800  RWIX
+  RAMGS0                0000c000   00001000  00000000  00001000  RWIX
+  RAMGS1                0000d000   00001000  00000000  00001000  RWIX
+  RAMGS2                0000e000   00001000  00000000  00001000  RWIX
+  RAMGS3                0000f000   00001000  00000000  00001000  RWIX
+  RAMGS4                00010000   00001000  00000000  00001000  RWIX
+  RAMGS5                00011000   00001000  00000000  00001000  RWIX
+  RAMGS6                00012000   00001000  00000000  00001000  RWIX
+  RAMGS7                00013000   00001000  00000000  00001000  RWIX
+  RAMGS8                00014000   00001000  00000000  00001000  RWIX
+  RAMGS9                00015000   00001000  00000000  00001000  RWIX
+  RAMGS10               00016000   00001000  00000000  00001000  RWIX
+  RAMGS11               00017000   00001000  00000000  00001000  RWIX
+  CANA_MSG_RAM          00049000   00000800  00000000  00000800  RWIX
+  CANB_MSG_RAM          0004b000   00000800  00000000  00000800  RWIX
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.cinit     0    00000122    00000066     
+                  00000122    00000048     Tune.obj (.cinit)
+                  0000016a    0000000e     rts2800_fpu32.lib : exit.obj (.cinit)
+                  00000178    00000005                       : _lock.obj (.cinit:__lock)
+                  0000017d    00000005                       : _lock.obj (.cinit:__unlock)
+                  00000182    00000004                       : errno.obj (.cinit)
+                  00000186    00000002     --HOLE-- [fill = 0]
+
+.pinit     0    00000122    00000000     UNINITIALIZED
+
+.reset     0    003fffc0    00000002     DSECT
+                  003fffc0    00000002     rts2800_fpu32.lib : boot28.obj (.reset)
+
+.TI.ramfunc 
+*          0    00000188    00000004     
+                  00000188    00000004     driverlib.lib : sysctl.obj (.TI.ramfunc)
+
+.text.1    0    0000018c    00000274     
+                  0000018c    00000234     Bluetooth.obj (.text)
+                  000003c0    00000040     driverlib.lib : sci.obj (.text:_SCI_setConfig)
+
+.text.2    0    00008000    000007fe     
+                  00008000    00000380     rts2800_fpu32.lib : e_powf.obj (.text)
+                  00008380    0000034a     ADCInit.obj (.text)
+                  000086ca    000000c9     rts2800_fpu32.lib : e_fmodf.obj (.text)
+                  00008793    00000066     ADCInit.obj (.text:retain)
+                  000087f9    00000002     driverlib.lib : interrupt.obj (.text:_Interrupt_nmiHandler)
+                  000087fb    00000002     rts2800_fpu32.lib : pre_init.obj (.text)
+                  000087fd    00000001                       : startup.obj (.text)
+
+.text.3    0    00008800    000007f9     
+                  00008800    00000326     Tune.obj (.text)
+                  00008b26    00000097     driverlib.lib : adc.obj (.text:_ADC_setMode)
+                  00008bbd    00000088     rts2800_fpu32.lib : fs_div28.obj (.text)
+                  00008c45    0000006e     driverlib.lib : sysctl.obj (.text:_SysCtl_getClock)
+                  00008cb3    00000062     rts2800_fpu32.lib : s_scalbnf.obj (.text)
+                  00008d15    00000058                       : s_sinf.obj (.text)
+                  00008d6d    00000056                       : boot28.obj (.text)
+                  00008dc3    00000054     driverlib.lib : interrupt.obj (.text:_Interrupt_initModule)
+                  00008e17    00000052                   : gpio.obj (.text:_GPIO_setPadConfig)
+                  00008e69    0000004d                   : sysctl.obj (.text:_SysCtl_selectOscSource)
+                  00008eb6    00000046                   : sci.obj (.text:_SCI_clearInterruptStatus)
+                  00008efc    00000044                   : sci.obj (.text:_SCI_disableInterrupt)
+                  00008f40    00000044                   : sci.obj (.text:_SCI_enableInterrupt)
+                  00008f84    0000003d                   : gpio.obj (.text:_GPIO_setPinConfig)
+                  00008fc1    00000038                   : gpio.obj (.text:_GPIO_setMasterCore)
+
+.text.4    0    00009000    000002d3     
+                  00009000    00000038     Bluetooth.obj (.text:retain)
+                  00009038    00000036     driverlib.lib : gpio.obj (.text:_GPIO_setQualificationMode)
+                  0000906e    00000036     MotorControl.obj (.text:retain)
+                  000090a4    00000033     driverlib.lib : interrupt.obj (.text:_Interrupt_enable)
+                  000090d7    00000031                   : gpio.obj (.text:_GPIO_setDirectionMode)
+                  00009108    00000029     rts2800_fpu32.lib : exit.obj (.text)
+                  00009131    00000001     --HOLE-- [fill = 0]
+                  00009132    00000025                       : e_sqrtf.obj (.text)
+                  00009157    00000024                       : cpy_tbl.obj (.text)
+                  0000917b    00000020     driverlib.lib : interrupt.obj (.text:_Interrupt_initVectorTable)
+                  0000919b    0000001f                   : sci.obj (.text:_SCI_isBaseValid)
+                  000091ba    0000001e     rts2800_fpu32.lib : memcpy.obj (.text)
+                  000091d8    0000001a     driverlib.lib : sysctl.obj (.text:_SysCtl_getLowSpeedClock)
+                  000091f2    00000019                   : sci.obj (.text:_SCI_disableModule)
+                  0000920b    00000019                   : sci.obj (.text:_SCI_performSoftwareReset)
+                  00009224    00000019     rts2800_fpu32.lib : args_main.obj (.text)
+                  0000923d    00000014     driverlib.lib : sci.obj (.text:_SCI_enableModule)
+                  00009251    00000013     main.obj (.text)
+                  00009264    00000011     rts2800_fpu32.lib : s_copysignf.obj (.text)
+                  00009275    0000000e     driverlib.lib : gpio.obj (.text:_GPIO_isPinValid)
+                  00009283    0000000e                   : interrupt.obj (.text:_Interrupt_defaultHandler)
+                  00009291    0000000d                   : interrupt.obj (.text:_Interrupt_disableMaster)
+                  0000929e    0000000d                   : interrupt.obj (.text:_Interrupt_enableMaster)
+                  000092ab    0000000b                   : sysctl.obj (.text:_SysCtl_isMCDClockFailureDetected)
+                  000092b6    0000000b     rts2800_fpu32.lib : u_div28.obj (.text)
+                  000092c1    00000009     driverlib.lib : sysctl.obj (.text:_SysCtl_serviceWatchdog)
+                  000092ca    00000009     rts2800_fpu32.lib : _lock.obj (.text)
+
+.text.5    0    0000b000    00000800     
+                  0000b000    0000056a     MotorControl.obj (.text)
+                  0000b56a    000001da     device.obj (.text)
+                  0000b744    000000ba     driverlib.lib : sysctl.obj (.text:_SysCtl_setClock)
+                  0000b7fe    00000002                   : interrupt.obj (.text:_Interrupt_illegalOperationHandler)
+
+.stack     1    00000400    00000100     UNINITIALIZED
+                  00000400    00000100     --HOLE--
+
+.econst    1    0000a800    0000066a     
+                  0000a800    000000c8     driverlib.lib : gpio.obj (.econst:.string)
+                  0000a8c8    000000c7                   : sci.obj (.econst:.string)
+                  0000a98f    00000001     --HOLE-- [fill = 0]
+                  0000a990    000000ab     MotorControl.obj (.econst:.string)
+                  0000aa3b    00000001     --HOLE-- [fill = 0]
+                  0000aa3c    000000aa     Bluetooth.obj (.econst:.string)
+                  0000aae6    000000a9     ADCInit.obj (.econst:.string)
+                  0000ab8f    00000001     --HOLE-- [fill = 0]
+                  0000ab90    000000a8     Tune.obj (.econst:.string)
+                  0000ac38    00000084     Tune.obj (.econst:_stringInfoStandard)
+                  0000acbc    00000069     driverlib.lib : interrupt.obj (.econst:.string)
+                  0000ad25    00000001     --HOLE-- [fill = 0]
+                  0000ad26    00000066                   : sysctl.obj (.econst:.string)
+                  0000ad8c    00000063                   : adc.obj (.econst:.string)
+                  0000adef    00000001     --HOLE-- [fill = 0]
+                  0000adf0    00000032     rts2800_fpu32.lib : e_powf.obj (.econst)
+                  0000ae22    00000013     device.obj (.econst:.string)
+                  0000ae35    00000001     --HOLE-- [fill = 0]
+                  0000ae36    0000000e     Tune.obj (.econst:_$P$T2$9)
+                  0000ae44    0000000e     Tune.obj (.econst:_$P$T3$10)
+                  0000ae52    00000006     rts2800_fpu32.lib : s_scalbnf.obj (.econst)
+                  0000ae58    00000004                       : e_fmodf.obj (.econst:_Zero)
+                  0000ae5c    00000004                       : e_powf.obj (.econst:_bp)
+                  0000ae60    00000004                       : e_powf.obj (.econst:_dp_h)
+                  0000ae64    00000004                       : e_powf.obj (.econst:_dp_l)
+                  0000ae68    00000002                       : e_fmodf.obj (.econst)
+
+.ebss      1    0000ae6a    000000da     UNINITIALIZED
+                  0000ae6a    00000006     rts2800_fpu32.lib : exit.obj (.ebss)
+                  0000ae70    00000002     Bluetooth.obj (.ebss)
+                  0000ae72    00000002     MotorControl.obj (.ebss)
+                  0000ae74    00000002     rts2800_fpu32.lib : _lock.obj (.ebss:__lock)
+                  0000ae76    00000002                       : _lock.obj (.ebss:__unlock)
+                  0000ae78    00000001     ADCInit.obj (.ebss)
+                  0000ae79    00000001     rts2800_fpu32.lib : errno.obj (.ebss)
+                  0000ae7a    00000006     --HOLE--
+                  0000ae80    000000c4     Tune.obj (.ebss)
+
+MODULE SUMMARY
+
+       Module             code   initialized data   uninitialized data
+       ------             ----   ----------------   ------------------
+    .\
+       MotorControl.obj   1440   171                2                 
+       Tune.obj           806    400                196               
+       ADCInit.obj        944    169                1                 
+       Bluetooth.obj      620    170                2                 
+       main.obj           19     0                  0                 
+    +--+------------------+------+------------------+--------------------+
+       Total:             3829   910                201               
+                                                                      
+    .\device\
+       device.obj         474    19                 0                 
+    +--+------------------+------+------------------+--------------------+
+       Total:             474    19                 0                 
+                                                                      
+    ../driverlib.lib
+       sci.obj            371    199                0                 
+       sysctl.obj         423    102                0                 
+       gpio.obj           316    200                0                 
+       interrupt.obj      211    105                0                 
+       adc.obj            151    99                 0                 
+    +--+------------------+------+------------------+--------------------+
+       Total:             1472   705                0                 
+                                                                      
+    C:\ti\ccsv7\tools\compiler\ti-cgt-c2000_16.9.1.LTS\lib\rts2800_fpu32.lib
+       e_powf.obj         896    62                 0                 
+       e_fmodf.obj        201    6                  0                 
+       fs_div28.obj       136    0                  0                 
+       s_scalbnf.obj      98     6                  0                 
+       s_sinf.obj         88     0                  0                 
+       boot28.obj         86     0                  0                 
+       exit.obj           41     14                 6                 
+       e_sqrtf.obj        37     0                  0                 
+       cpy_tbl.obj        36     0                  0                 
+       memcpy.obj         30     0                  0                 
+       args_main.obj      25     0                  0                 
+       _lock.obj          9      10                 4                 
+       s_copysignf.obj    17     0                  0                 
+       u_div28.obj        11     0                  0                 
+       errno.obj          0      4                  1                 
+       pre_init.obj       2      0                  0                 
+       startup.obj        1      0                  0                 
+    +--+------------------+------+------------------+--------------------+
+       Total:             1714   102                11                
+                                                                      
+       Stack:             0      0                  256               
+    +--+------------------+------+------------------+--------------------+
+       Grand Total:       7489   1736               468               
+
+
+GLOBAL DATA SYMBOLS: SORTED BY DATA PAGE
+
+address     data page           name
+--------    ----------------    ----
+00000400      10 (00000400)     __stack
+
+0000ac38     2b0 (0000ac00)     _stringInfoStandard
+
+0000ae6a     2b9 (0000ae40)     ___TI_enable_exit_profile_output
+0000ae6c     2b9 (0000ae40)     ___TI_cleanup_ptr
+0000ae6e     2b9 (0000ae40)     ___TI_dtors_ptr
+0000ae70     2b9 (0000ae40)     _sendChar
+0000ae71     2b9 (0000ae40)     _recievedChar
+0000ae72     2b9 (0000ae40)     _timeBasePeriod
+0000ae73     2b9 (0000ae40)     _stepCnt
+0000ae74     2b9 (0000ae40)     __lock
+0000ae76     2b9 (0000ae40)     __unlock
+0000ae78     2b9 (0000ae40)     _thresholdCounter
+0000ae79     2b9 (0000ae40)     _errno
+
+0000ae80     2ba (0000ae80)     _tuning
+0000ae82     2ba (0000ae80)     _locked
+0000ae8c     2ba (0000ae80)     _filtInputs
+0000ae96     2ba (0000ae80)     _filtOutputs
+
+0000aec0     2bb (0000aec0)     _stringInfo
+
+
+GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
+
+page  address   name                                      
+----  -------   ----                                      
+abs   ffffffff  .text                                     
+0     00009108  C$$EXIT                                   
+0     00008bbd  FS$$DIV                                   
+0     000092b6  U$$DIV                                    
+0     000092bb  U$$MOD                                    
+0     00008b26  _ADC_setMode                              
+0     0000b5dd  _Device_enableAllPeripherals              
+0     0000b727  _Device_enableUnbondedGPIOPullups         
+0     0000b704  _Device_enableUnbondedGPIOPullupsFor100Pin
+0     0000b6ed  _Device_enableUnbondedGPIOPullupsFor176Pin
+0     0000b5ac  _Device_init                              
+0     0000b6cc  _Device_initGPIO                          
+0     000090d7  _GPIO_setDirectionMode                    
+0     00008fc1  _GPIO_setMasterCore                       
+0     00008e17  _GPIO_setPadConfig                        
+0     00008f84  _GPIO_setPinConfig                        
+0     00009038  _GPIO_setQualificationMode                
+0     000090a4  _Interrupt_enable                         
+0     00008dc3  _Interrupt_initModule                     
+0     0000917b  _Interrupt_initVectorTable                
+0     00008886  _PLL                                      
+0     00008eb6  _SCI_clearInterruptStatus                 
+0     00008efc  _SCI_disableInterrupt                     
+0     00008f40  _SCI_enableInterrupt                      
+0     000003c0  _SCI_setConfig                            
+0     00000188  _SysCtl_delay                             
+0     00008c45  _SysCtl_getClock                          
+0     000091d8  _SysCtl_getLowSpeedClock                  
+0     00008e69  _SysCtl_selectOscSource                   
+0     0000b744  _SysCtl_setClock                          
+1     00000500  __STACK_END                               
+abs   00000100  __STACK_SIZE                              
+1     0000ae6c  ___TI_cleanup_ptr                         
+1     0000ae6e  ___TI_dtors_ptr                           
+1     0000ae6a  ___TI_enable_exit_profile_output          
+abs   ffffffff  ___TI_pprof_out_hndl                      
+abs   ffffffff  ___TI_prof_data_size                      
+abs   ffffffff  ___TI_prof_data_start                     
+abs   ffffffff  ___binit__                                
+abs   ffffffff  ___c_args__                               
+0     00000122  ___cinit__                                
+0     0000b73d  ___error__                                
+abs   ffffffff  ___etext__                                
+abs   ffffffff  ___pinit__                                
+abs   ffffffff  ___text__                                 
+0     00009224  __args_main                               
+1     0000ae74  __lock                                    
+0     000092d2  __nop                                     
+0     000092ce  __register_lock                           
+0     000092ca  __register_unlock                         
+1     00000400  __stack                                   
+0     000087fd  __system_post_cinit                       
+0     000087fb  __system_pre_init                         
+1     0000ae76  __unlock                                  
+0     00009108  _abort                                    
+0     00008793  _adcA1ISR                                 
+0     00008d6d  _c_int00                                  
+0     00009157  _copy_in                                  
+0     00009264  _copysign                                 
+0     00009264  _copysignf                                
+0     0000b537  _disableMotor                             
+0     0000b4e5  _enableMotor                              
+0     0000906e  _epwm2ISR                                 
+1     0000ae79  _errno                                    
+0     0000910a  _exit                                     
+1     0000ae8c  _filtInputs                               
+1     0000ae96  _filtOutputs                              
+0     000086ca  _fmod                                     
+0     000086ca  _fmodf                                    
+0     00008634  _initADC                                  
+0     00008665  _initADCSOC                               
+0     000002ec  _initBluetooth                            
+0     00008686  _initEPWM                                 
+0     00000377  _initGPIO                                 
+0     0000b252  _initMotorController                      
+0     0000b265  _initPWM                                  
+0     0000b2d0  _initPins                                 
+0     000002f1  _initSCI                                  
+0     0000886f  _initTune                                 
+0     00008cb3  _ldexp                                    
+0     00008cb3  _ldexpf                                   
+1     0000ae82  _locked                                   
+0     00009251  _main                                     
+0     000091ba  _memcpy                                   
+0     00008000  _pow                                      
+0     00008000  _powf                                     
+1     0000ae71  _recievedChar                             
+0     00008cb3  _scalbn                                   
+0     00008cb3  _scalbnf                                  
+0     00009000  _sciaRXFIFOISR                            
+1     0000ae70  _sendChar                                 
+0     0000887a  _setStringInfo                            
+0     00008d15  _sin                                      
+0     00008d15  _sinf                                     
+0     00009132  _sqrt                                     
+0     00009132  _sqrtf                                    
+0     000086b0  _startADC                                 
+1     0000ae73  _stepCnt                                  
+0     000086bd  _stopADC                                  
+1     0000aec0  _stringInfo                               
+1     0000ac38  _stringInfoStandard                       
+1     0000ae78  _thresholdCounter                         
+1     0000ae72  _timeBasePeriod                           
+0     00008a7e  _tuneGuitar                               
+1     0000ae80  _tuning                                   
+0     0000b43f  _turnMotor                                
+abs   ffffffff  binit                                     
+0     00000122  cinit                                     
+abs   ffffffff  etext                                     
+abs   ffffffff  pinit                                     
+
+
+GLOBAL SYMBOLS: SORTED BY Symbol Address 
+
+page  address   name                                      
+----  -------   ----                                      
+0     00000122  ___cinit__                                
+0     00000122  cinit                                     
+0     00000188  _SysCtl_delay                             
+0     000002ec  _initBluetooth                            
+0     000002f1  _initSCI                                  
+0     00000377  _initGPIO                                 
+0     000003c0  _SCI_setConfig                            
+0     00008000  _pow                                      
+0     00008000  _powf                                     
+0     00008634  _initADC                                  
+0     00008665  _initADCSOC                               
+0     00008686  _initEPWM                                 
+0     000086b0  _startADC                                 
+0     000086bd  _stopADC                                  
+0     000086ca  _fmod                                     
+0     000086ca  _fmodf                                    
+0     00008793  _adcA1ISR                                 
+0     000087fb  __system_pre_init                         
+0     000087fd  __system_post_cinit                       
+0     0000886f  _initTune                                 
+0     0000887a  _setStringInfo                            
+0     00008886  _PLL                                      
+0     00008a7e  _tuneGuitar                               
+0     00008b26  _ADC_setMode                              
+0     00008bbd  FS$$DIV                                   
+0     00008c45  _SysCtl_getClock                          
+0     00008cb3  _ldexp                                    
+0     00008cb3  _ldexpf                                   
+0     00008cb3  _scalbn                                   
+0     00008cb3  _scalbnf                                  
+0     00008d15  _sin                                      
+0     00008d15  _sinf                                     
+0     00008d6d  _c_int00                                  
+0     00008dc3  _Interrupt_initModule                     
+0     00008e17  _GPIO_setPadConfig                        
+0     00008e69  _SysCtl_selectOscSource                   
+0     00008eb6  _SCI_clearInterruptStatus                 
+0     00008efc  _SCI_disableInterrupt                     
+0     00008f40  _SCI_enableInterrupt                      
+0     00008f84  _GPIO_setPinConfig                        
+0     00008fc1  _GPIO_setMasterCore                       
+0     00009000  _sciaRXFIFOISR                            
+0     00009038  _GPIO_setQualificationMode                
+0     0000906e  _epwm2ISR                                 
+0     000090a4  _Interrupt_enable                         
+0     000090d7  _GPIO_setDirectionMode                    
+0     00009108  C$$EXIT                                   
+0     00009108  _abort                                    
+0     0000910a  _exit                                     
+0     00009132  _sqrt                                     
+0     00009132  _sqrtf                                    
+0     00009157  _copy_in                                  
+0     0000917b  _Interrupt_initVectorTable                
+0     000091ba  _memcpy                                   
+0     000091d8  _SysCtl_getLowSpeedClock                  
+0     00009224  __args_main                               
+0     00009251  _main                                     
+0     00009264  _copysign                                 
+0     00009264  _copysignf                                
+0     000092b6  U$$DIV                                    
+0     000092bb  U$$MOD                                    
+0     000092ca  __register_unlock                         
+0     000092ce  __register_lock                           
+0     000092d2  __nop                                     
+0     0000b252  _initMotorController                      
+0     0000b265  _initPWM                                  
+0     0000b2d0  _initPins                                 
+0     0000b43f  _turnMotor                                
+0     0000b4e5  _enableMotor                              
+0     0000b537  _disableMotor                             
+0     0000b5ac  _Device_init                              
+0     0000b5dd  _Device_enableAllPeripherals              
+0     0000b6cc  _Device_initGPIO                          
+0     0000b6ed  _Device_enableUnbondedGPIOPullupsFor176Pin
+0     0000b704  _Device_enableUnbondedGPIOPullupsFor100Pin
+0     0000b727  _Device_enableUnbondedGPIOPullups         
+0     0000b73d  ___error__                                
+0     0000b744  _SysCtl_setClock                          
+1     00000400  __stack                                   
+1     00000500  __STACK_END                               
+1     0000ac38  _stringInfoStandard                       
+1     0000ae6a  ___TI_enable_exit_profile_output          
+1     0000ae6c  ___TI_cleanup_ptr                         
+1     0000ae6e  ___TI_dtors_ptr                           
+1     0000ae70  _sendChar                                 
+1     0000ae71  _recievedChar                             
+1     0000ae72  _timeBasePeriod                           
+1     0000ae73  _stepCnt                                  
+1     0000ae74  __lock                                    
+1     0000ae76  __unlock                                  
+1     0000ae78  _thresholdCounter                         
+1     0000ae79  _errno                                    
+1     0000ae80  _tuning                                   
+1     0000ae82  _locked                                   
+1     0000ae8c  _filtInputs                               
+1     0000ae96  _filtOutputs                              
+1     0000aec0  _stringInfo                               
+abs   00000100  __STACK_SIZE                              
+abs   ffffffff  .text                                     
+abs   ffffffff  ___TI_pprof_out_hndl                      
+abs   ffffffff  ___TI_prof_data_size                      
+abs   ffffffff  ___TI_prof_data_start                     
+abs   ffffffff  ___binit__                                
+abs   ffffffff  ___c_args__                               
+abs   ffffffff  ___etext__                                
+abs   ffffffff  ___pinit__                                
+abs   ffffffff  ___text__                                 
+abs   ffffffff  binit                                     
+abs   ffffffff  etext                                     
+abs   ffffffff  pinit                                     
+
+[110 symbols]

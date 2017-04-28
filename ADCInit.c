@@ -105,8 +105,8 @@ void initEPWM(void) {
     //
     // Set the compare A value to  and the period to
     //
-    EPWM_setCounterCompareValue(EPWM1_BASE, EPWM_COUNTER_COMPARE_A, 12500);
-    EPWM_setTimeBasePeriod(EPWM1_BASE, 25000);
+    EPWM_setCounterCompareValue(EPWM1_BASE, EPWM_COUNTER_COMPARE_A, 1250);
+    EPWM_setTimeBasePeriod(EPWM1_BASE, 2500);
 
     //
     // Freeze the counter
@@ -140,29 +140,42 @@ void stopADC(void) {
 // ADC ISR
 //
 __interrupt void adcA1ISR(void) {
-    int16_t adcResult;
+    float adcResult;
 
     // Get the latest result and center it at 0
-    adcResult = ADC_readResult(ADCARESULT_BASE, ADC_SOC_NUMBER0) - ADC_BASELINE;
+    adcResult = (float)ADC_readResult(ADCARESULT_BASE, ADC_SOC_NUMBER0) - ADC_BASELINE;
+    adcResult = adcResult / 2048.0f;
 
     if (adcResult > ADC_THRESHOLD || adcResult < -ADC_THRESHOLD) {
-        tuning = true;
+        if (!tuning) {
+            // Beginning of tuning
+            tuning = true;
+            PLL(true, , adcResult);
+        }
+        else {
+            // Already tuning
+            PLL(false, , adcResult);
+        }
         thresholdCounter = 100;
-
-        // TODO: SEND adcResult to PLL function
     }
     else {
+        if (tuning) {
+            PLL(false, 2, adcResult);
+        }
         thresholdCounter--;
     }
 
     if (thresholdCounter == 0 && tuning) {
+        tuning = false;
         // Stop ADC
-        stopADC();
+        //stopADC();
 
         // Strum again
 
-        // Clear ADC interrupt
-        ADC_clearInterruptStatus(ADCA_BASE, ADC_INT_NUMBER1);
-        Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
+
     }
+
+    // Clear ADC interrupt
+    ADC_clearInterruptStatus(ADCA_BASE, ADC_INT_NUMBER1);
+    Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
 }

@@ -34,6 +34,8 @@ typedef struct StringInformationTag {
     float coefs[6][2][5];
 } StringInformation;
 
+//StringInformation stringInfoDropD;
+
 
 /*********************/
 /***** FUNCTIONS *****/

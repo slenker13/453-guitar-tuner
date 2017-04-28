@@ -21,7 +21,7 @@
 #define EX_ADC_SIGNAL_MODE   ADC_MODE_SINGLE_ENDED  // Or ADC_MODE_DIFFERENTIAL
 
 #define ADC_BASELINE    2200
-#define ADC_THRESHOLD    100
+#define ADC_THRESHOLD    .05
 
 
 /*********************/
