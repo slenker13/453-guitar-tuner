@@ -18,7 +18,7 @@
 //
 // Defines
 //
-#define TUNING_THRESHOLD 0.4f
+#define TUNING_THRESHOLD 0.2f
 #define PI 3.14159265358979323846
 
 //
@@ -28,6 +28,8 @@ extern bool tuning;                    // System currently tuning
 extern bool locked;                    // PLL locked onto a frequency
 extern uint16_t currString;            // Current string being tuned
 extern bool low;                       // True if tuning bottom 3 strings (6,4,2)
+extern bool tuned;                     // True if string is below tuning threshold
+extern uint16_t stage;                 // Tuning stage
 
 //
 // String frequencies struct

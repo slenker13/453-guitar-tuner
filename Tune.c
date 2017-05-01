@@ -20,6 +20,8 @@ bool tuning;                    // System currently tuning
 bool locked;                    // PLL locked onto a frequency
 uint16_t currString;            // Current string being tuned
 bool low;                       // True if tuning bottom 3 strings (6,4,2)
+bool tuned;                     // True if string is below tuning threshold
+uint16_t stage;                 // Tuning stage
 
 //
 // Tuning configurations
@@ -39,6 +41,7 @@ const StringInformation stringInfoStandard = { { 329.63f, 246.94f, 196.00f, 146.
                                                    {1.0f, -3.85761510247108f, 5.58315992835721f, -3.59305483001974f, 0.867521631645089f} }
                                                } };
 
+const float freqDiv[6] = { 0.655f, 0.789f, 1.111f, 0.667f, 0.833f, 0.811f };
 
 //
 // init function
@@ -48,6 +51,8 @@ void initTune(void) {
     locked = false;
     low = true;
     currString = 6;
+    tuned = false;
+    stage = 1;
 
     // Default to standard
     stringInfo = stringInfoStandard;
@@ -147,7 +152,7 @@ void PLL(bool newString, uint16_t string, float adcIn) {
     freqIncr = freqIncr + (phase1 - phase1_old) / (float)Fs;
 
     // Every .01 seconds add a value to the averages
-    if (fmod(j, 0.01 * Fs) == 0) {
+    if (fmod(j, 0.015 * Fs) == 0) {
         avg[ptr] = phase2;
         avg2[ptr] = phase1;
         ptr = (ptr + 1) % avgLength;
@@ -186,15 +191,19 @@ void tuneGuitar(float freq) {
     uint16_t dir = 0;
 
     // Stop the ADC
-    stopADC();
-    ADC_clearInterruptStatus(ADCA_BASE, ADC_INT_NUMBER1);
-    Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
+    //stopADC();
 
     // Get frequency difference
     diff = freq - stringInfo.freqs[currString - 1];
 
     if (fabs(diff) < TUNING_THRESHOLD) {
         // IN TUNE
+        // Restart ADC
+        locked = false;
+        tuning = false;
+        tuned = true;
+        //startADC();
+
         return;
     }
     else if (diff < 0.0f) {
@@ -207,11 +216,19 @@ void tuneGuitar(float freq) {
     }
 
     // Turn motor
-    float angle = (fabs(diff) / 0.81f) * 10.0f;
-    turnMotor(4, dir, angle);
+    float angle = (fabs(diff) / freqDiv[currString - 1]) * 10.0f;
+    if (stage == 1) {
+        turnMotor(currString, dir, angle);
+    }
+    else if (stage == 2) {
+        turnMotor(currString + 1, dir, angle);
+    }
+    else if (stage == 3 || stage == 4) {
+        turnMotor(6, dir, angle);
+    }
 
     // Restart ADC
     locked = false;
     tuning = false;
-    startADC();
+    //startADC();
 }

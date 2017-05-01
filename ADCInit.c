@@ -145,7 +145,20 @@ void stopADC(void) {
 __interrupt void adcA1ISR(void) {
     // Get the latest result and center it at 0
     adcResult = (float)ADC_readResult(ADCARESULT_BASE, ADC_SOC_NUMBER0) - ADC_BASELINE;
-    adcResult = adcResult / 2048.0f;
+
+    // Normalize result and account for string amplitude
+    if (currString == 3) {
+        adcResult = adcResult / 1024.0f;
+    }
+    else if (currString == 2) {
+        adcResult = adcResult / 800.0f;
+    }
+    else if (currString == 1) {
+        adcResult = adcResult / 200.0f;
+    }
+    else {
+        adcResult = adcResult / 2048.0f;
+    }
 
     newVal = true;
 
