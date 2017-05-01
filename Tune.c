@@ -167,6 +167,7 @@ void PLL(bool newString, uint16_t string, float adcIn) {
 
     if (avg_1 < 0.1f && avg_2 < 0.1f) {
         locked = true;
+        tuneGuitar(freq);
     }
 
     // Adjust the frequency
@@ -176,7 +177,7 @@ void PLL(bool newString, uint16_t string, float adcIn) {
     j++;
 
     // Tune the guitar!
-    tuneGuitar(freq);
+    //tuneGuitar(freq);
 }
 
 // Tune guitar
@@ -184,19 +185,20 @@ void tuneGuitar(float freq) {
     float diff;
     uint16_t dir = 0;
 
+    // Stop the ADC
+    stopADC();
+    ADC_clearInterruptStatus(ADCA_BASE, ADC_INT_NUMBER1);
+    Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
+
     // Get frequency difference
     diff = freq - stringInfo.freqs[currString - 1];
 
-    // Check if in tune
-    if ((diff < TUNING_THRESHOLD) && locked) {
-        // In tune!!!!
-        disableAllMotors();
-        locked = false;
-
+    if (fabs(diff) < TUNING_THRESHOLD) {
+        // IN TUNE
         return;
     }
-    else if (diff < 0) {
-        // String is flat
+    else if (diff < 0.0f) {
+        // String is float
         dir = 1;
     }
     else {
@@ -204,14 +206,11 @@ void tuneGuitar(float freq) {
         dir = 0;
     }
 
-    // Turn Motor
-    enableMotor(4, dir);
-/*
-    if (low) {
-        enableMotor(currString, dir);
-    }
-    else {
-        enableMotor(currString + 1, dir);
-    }
-*/
+    // Turn motor
+    float angle = (fabs(diff) / 0.81f) * 10.0f;
+    turnMotor(4, dir, angle);
+
+    // Restart ADC
+    locked = false;
+    startADC();
 }

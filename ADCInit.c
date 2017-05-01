@@ -14,6 +14,8 @@
 // Globals
 //
 uint16_t thresholdCounter;
+bool newVal;
+uint16_t adcResult;
 
 //
 // Init function

@@ -238,9 +238,9 @@ __interrupt void epwm2ISR(void) {
 // Turn motor specified number of degrees
 // dir 1 = up, 0 = down
 //
-void turnMotor(uint16_t motor, uint16_t direction, uint16_t degrees) {
+void turnMotor(uint16_t motor, uint16_t direction, float degrees) {
     // Calculate steps
-    uint16_t steps = degrees / 1.8;
+    uint16_t steps = degrees / 1.8f;
 
     // Reset stepCnt
     stepCnt = 0;
