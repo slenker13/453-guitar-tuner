@@ -20,6 +20,8 @@
 #include "ADCInit.h"
 #include "Tune.h"
 
+#include <stdbool.h>
+
 //
 // Main
 //
@@ -54,6 +56,7 @@ void main(void)
     initADC();
     initTune();
 
+    uint16_t thresholdCounter = 0;
     //
     // Enable Global Interrupt (INTM) and realtime interrupt (DBGM)
     //
@@ -66,7 +69,42 @@ void main(void)
     startADC();
     for(;;)
     {
-        NOP;
+        if (newVal) {
+            newVal = false;
+
+            if (adcResult > ADC_THRESHOLD || adcResult < -ADC_THRESHOLD) {
+                if (!tuning) {
+                    // Beginning of tuning
+                    tuning = true;
+                    PLL(true, currString, adcResult);
+                }
+                else {
+                    // Already tuning
+                    PLL(false, currString, adcResult);
+                }
+                thresholdCounter = 100;
+            }
+            else {
+                if (tuning) {
+                    PLL(false, currString, adcResult);
+                }
+                thresholdCounter--;
+            }
+
+            if (thresholdCounter == 0 && tuning) {
+                tuning = false;
+
+                // If locked swtich to next string
+                if (locked) {
+                    locked = false;
+                    currString += 2;
+                }
+
+                // Send message to strum again
+
+            }
+        }
+
     }
 }
 

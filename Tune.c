@@ -212,5 +212,6 @@ void tuneGuitar(float freq) {
 
     // Restart ADC
     locked = false;
+    tuning = false;
     startADC();
 }

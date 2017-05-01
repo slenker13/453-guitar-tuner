@@ -9,19 +9,19 @@
 #include "Tune.h"
 #include "MotorControl.h"
 
+#include <stdbool.h>
 
 //
 // Globals
 //
-uint16_t thresholdCounter;
 bool newVal;
-uint16_t adcResult;
+float adcResult;
 
 //
 // Init function
 //
 void initADC(void) {
-    thresholdCounter = 0;
+    newVal = false;
 
     //
     // Map the ISR
@@ -143,47 +143,11 @@ void stopADC(void) {
 // ADC ISR
 //
 __interrupt void adcA1ISR(void) {
-    float adcResult;
-
     // Get the latest result and center it at 0
     adcResult = (float)ADC_readResult(ADCARESULT_BASE, ADC_SOC_NUMBER0) - ADC_BASELINE;
     adcResult = adcResult / 2048.0f;
 
-    if (adcResult > ADC_THRESHOLD || adcResult < -ADC_THRESHOLD) {
-        if (!tuning) {
-            // Beginning of tuning
-            tuning = true;
-            PLL(true, currString, adcResult);
-        }
-        else {
-            // Already tuning
-            PLL(false, currString, adcResult);
-        }
-        thresholdCounter = 100;
-    }
-    else {
-        if (tuning) {
-            PLL(false, currString, adcResult);
-        }
-        thresholdCounter--;
-    }
-
-    if ((thresholdCounter == 0 || locked) && tuning) {
-        tuning = false;
-        // Stop ADC
-        //stopADC();
-        tuning = false;
-        disableAllMotors();
-
-        // If locked swtich to next string
-        if (locked) {
-            locked = false;
-            currString += 2;
-        }
-
-        // Send message to strum again
-
-    }
+    newVal = true;
 
     // Clear ADC interrupt
     ADC_clearInterruptStatus(ADCA_BASE, ADC_INT_NUMBER1);

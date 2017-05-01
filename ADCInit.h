@@ -23,6 +23,12 @@
 #define ADC_BASELINE    2200
 #define ADC_THRESHOLD    .1
 
+//
+// Globals
+//
+extern bool newVal;
+extern float adcResult;
+
 
 /*********************/
 /***** FUNCTIONS *****/
