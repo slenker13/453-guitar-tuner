@@ -52,7 +52,7 @@ void main(void)
     /***** INIT MODULES *****/
     /************************/
     initMotorController(2000);
-    //initBluetooth();
+    initBluetooth();
     initADC();
     initTune();
 
@@ -67,7 +67,6 @@ void main(void)
     //
     // IDLE loop
     //
-    startADC();
     for(;;)
     {
         if (newVal) {
@@ -98,7 +97,6 @@ void main(void)
             }
 
             if (thresholdCounter == 0 && (tuning || tuned)) {
-                //stopADC();
                 tuning = false;
 
                 if (tuned) {
@@ -133,12 +131,11 @@ void main(void)
 
                     if (stage == 5) {
                         // DONE
+                        stage = 1;
                         stopADC();
-                        break;
                     }
                 }
 
-                //startADC();
                 // Send message to strum again
             }
         }
