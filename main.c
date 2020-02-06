@@ -16,6 +16,11 @@
 #include "driverlib.h"
 #include "device.h"
 #include "MotorControl.h"
+#include "Bluetooth.h"
+#include "ADCInit.h"
+#include "Tune.h"
+
+#include <stdbool.h>
 
 //
 // Main
@@ -47,6 +52,11 @@ void main(void)
     /***** INIT MODULES *****/
     /************************/
     initMotorController(2000);
+    initBluetooth();
+    initADC();
+    initTune();
+
+    uint16_t thresholdCounter = 0;
 
     //
     // Enable Global Interrupt (INTM) and realtime interrupt (DBGM)
@@ -55,17 +65,81 @@ void main(void)
     ERTM;
 
     //
-    // IDLE loop. Just sit and loop forever (optional):
+    // IDLE loop
     //
-
-    turnMotor(5, 0, 360);
-    turnMotor(6, 1, 180);
-    turnMotor(6, 0, 720);
-    turnMotor(5, 1, 360);
-
     for(;;)
     {
-        NOP;
+        if (newVal) {
+            newVal = false;
+
+            if (adcResult > ADC_THRESHOLD || adcResult < -ADC_THRESHOLD) {
+                if (!tuned) {
+                    if (!tuning) {
+                        // Beginning of tuning
+                        tuning = true;
+                        PLL(true, currString, adcResult);
+                    }
+                    else {
+                        // Already tuning
+                        PLL(false, currString, adcResult);
+                    }
+                }
+                thresholdCounter = 100;
+            }
+            else {
+                if (tuning) {
+                    PLL(false, currString, adcResult);
+                }
+
+                if (thresholdCounter > 0) {
+                    thresholdCounter--;
+                }
+            }
+
+            if (thresholdCounter == 0 && (tuning || tuned)) {
+                tuning = false;
+
+                if (tuned) {
+                    tuned = false;
+                    turnMotor(2, 1, 360.0f);
+
+                    if (stage == 1) {
+                        if (currString == 4) {
+                            stage = 2;
+                            currString = 5;
+                        }
+                        else {
+                            currString = 4;
+                        }
+                    }
+                    else if (stage == 2) {
+                        if (currString == 3) {
+                            stage = 3;
+                            currString = 2;
+                        }
+                        else {
+                            currString = 3;
+                        }
+                    }
+                    else if (stage == 3) {
+                        stage = 4;
+                        currString = 1;
+                    }
+                    else if (stage == 4) {
+                        stage = 5;
+                    }
+
+                    if (stage == 5) {
+                        // DONE
+                        stage = 1;
+                        stopADC();
+                    }
+                }
+
+                // Send message to strum again
+            }
+        }
+
     }
 }
 
